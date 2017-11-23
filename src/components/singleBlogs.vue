@@ -1,7 +1,7 @@
 <template>
     <div id="single-blog">
         <h1>{{ blog.title }}</h1>
-        <article>{{blog.body}}</article>
+        <article>{{blog.content}}</article>
     </div>
 </template>
 <script>
@@ -13,9 +13,11 @@ export default {
       }
   },
   created(){
-      this.$http.get('https://jsonplaceholder.typicode.com/posts/'+this.id).then(function(data){
-          this.blog = data.body;
-      })
+      this.$http.get('https://vue-tutorial-c96d5.firebaseio.com/post/'+this.id+'.json').then(function(data){
+          return data.json();
+      }).then(function(data){
+          this.blog = data;
+      });
   }
 }
 </script>

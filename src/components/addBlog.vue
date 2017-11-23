@@ -65,13 +65,7 @@ export default {
   },
   methods: {  
     addBlog: function(){
-      this.$http.post('http://jsonplaceholder.typicode.com/posts', {
-        title: this.dataBlog.title,
-        body: 'this.blog.content',
-        userId: 1
-      }).then(function(res){
-        console.log(res);
-      });
+      this.$http.post('https://vue-tutorial-c96d5.firebaseio.com/post.json', this.dataBlog).then(function(res){});
     
       this.submited = true;
 

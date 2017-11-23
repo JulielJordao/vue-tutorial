@@ -2,9 +2,9 @@
   <div id="show-blogs" v-theme:column="'narrow'">
     <h1>All Blog Articles</h1>
     <input type="text" v-model="search" placeholder="search blogs">
-    <div v-for="articles in filteredBlogs" class="single-blog" :key="articles.title">
+    <div v-for="articles in filteredBlogs" class="single-blog" :key="articles.id">
       <router-link v-bind:to="'/blog/' + articles.id"><h2 v-rainbow>{{articles.title | to-uppercase}}</h2></router-link>
-      <article>{{articles.body | snippet}}</article>
+      <article>{{articles.content | snippet}}</article>
     </div>
 
   </div>
@@ -23,9 +23,16 @@
     },
     methods: {},
     created() {
-      this.$http.get('https://jsonplaceholder.typicode.com/posts').then(function (result) {
-        this.arrBlog = result.body.splice(0, 10);
-      });
+      this.$http.get('https://vue-tutorial-c96d5.firebaseio.com/post.json').then(function (data) {
+        return data.json();
+      }).then(function(data){
+        var blogsArray = [];
+        for (let key in data){
+          data[key].id = key;
+          blogsArray.push(data[key]);
+        }
+        this.arrBlog = blogsArray;
+      })
     },
     
     filters: {
